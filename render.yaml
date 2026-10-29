@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: weatherlens
+    env: python
+    plan: free
+    buildCommand: "./build.sh"
+    startCommand: "bash -c 'cd WeatherLens && gunicorn WeatherLens.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --threads 2 --timeout 60 --keep-alive 5'"
+    healthCheckPath: "/health/"
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.7
+      - key: SECRET_KEY
+        sync: false
+      - key: WEATHER_API_KEY
+        value: "a8405a2c77b2427bba2195759262910"
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        value: "weatherlens-zqot.onrender.com,weatherlens.onrender.com"
+      - key: CSRF_TRUSTED_ORIGINS
+        value: "https://weatherlens-zqot.onrender.com"
+      - key: ADMIN_USERNAME
+        value: "SuyeshMishra"
+      - key: ADMIN_PASSWORD
+        value: "1234"
+      - key: ADMIN_EMAIL
+        value: "admin@example.com"
+
